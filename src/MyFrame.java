@@ -52,9 +52,7 @@ public class MyFrame extends JFrame implements ActionListener {
         headerPanel.add(btnGo);
 
         mainPanel.setBackground(Color.yellow);
-        JLabel mainLabel = new JLabel();
-        mainLabel.setText("Main content will go here.");
-        mainPanel.add(mainLabel);
+
 
         this.add(headerPanel, BorderLayout.NORTH);
         this.add(mainPanel, BorderLayout.CENTER);
@@ -123,7 +121,7 @@ public class MyFrame extends JFrame implements ActionListener {
         for (int i = 0; i < strInput.length(); i++) {
             if (validVars.contains(strInput.substring(i, i + 1))) { //check if given character is a valid variable
                 if (!inputVars.contains(strInput.substring(i, i + 1))) { //checks if already in list of input variables
-                    inputVars.add(strInput); //adds given variable if not already in list (avoids double-counting)
+                    inputVars.add(strInput.substring(i, i+1)); //adds given variable if not already in list (avoids double-counting)
                 }
             }
         }
@@ -134,8 +132,13 @@ public class MyFrame extends JFrame implements ActionListener {
         int rows = (int) Math.pow(2, numUniqueVariables) + 1;
 
         GridLayout truthGrid = new GridLayout(rows, columns);
-
         mainPanel.setLayout(truthGrid);
 
+        for(int  i = 0; i < inputVars.size(); i++){
+            JLabel label = new JLabel();
+            label.setText(inputVars.get(i));
+            mainPanel.add(label);
+        }
+        this.setVisible(true);
     }
 }
