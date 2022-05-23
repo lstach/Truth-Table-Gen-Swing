@@ -64,119 +64,23 @@ public class MyFrame extends JFrame implements ActionListener {
         if (e.getSource() == btnHelp) {
             new HelpFrame();
         } else if (e.getSource() == btnGo) {
+            ShuntingYard shunter = new ShuntingYard();
+            String tokens[] = txtEntry.getText().split(" ");
+            ArrayList<String> output = shunter.shunt(tokens);
+
+            for (String s : output){
+                System.out.print(s + " ");
+            }
+            System.out.println("\n");
             ParseInput();
             //calculate formula
         }
-
     }
 
     public void ParseInput() {
 
         mainPanel.removeAll(); //clears all components from mainPanel before re-populating it with truth table
 
-        /*tasks:
-        1. check for parentheses
-        2. check for variables
-        3. check for operators
-         */
-
-        ArrayList<String> validVars = new ArrayList<>();
-        ArrayList<String> validOperators = new ArrayList<>();
-
-        validVars.add("a");
-        validVars.add("b");
-        validVars.add("c");
-        validVars.add("d");
-
-        validVars.add("e");
-        validVars.add("g");
-        validVars.add("h");
-        validVars.add("i");
-
-        validVars.add("j");
-        validVars.add("k");
-        validVars.add("l");
-        validVars.add("m");
-
-        validVars.add("n");
-        validVars.add("o");
-        validVars.add("p");
-        validVars.add("q");
-
-        validVars.add("r");
-        validVars.add("s");
-        validVars.add("u");
-        validVars.add("v");
-
-        validVars.add("w");
-        //validVars.add("x");
-        validVars.add("y");
-        validVars.add("z");
-
-        validOperators.add("/\\");
-        validOperators.add("\\/");
-        validOperators.add("->");
-        validOperators.add("<->");
-        validOperators.add("!");
-        validOperators.add("xor");
-
-        //hashmap where key is variable letter and value is boolean, boolean is true
-        //if corresponding letter has been counted and false if not?
-        //HashMap<String, Boolean> varMap = new HashMap<>();
-
-        String strInput = txtEntry.getText().toLowerCase();
-        //strInput.replaceAll("\\s", "");
-        ArrayList<String> inputVars = new ArrayList<>();
-
-        for (int i = 0; i < strInput.length(); i++) {
-            String currentStr = strInput.substring(i, i + 1); //gets character at current index
-            if (validVars.contains(currentStr)) { //check if given character is a valid variable
-                if (!inputVars.contains(currentStr)) { //checks if already in list of input variables
-                    inputVars.add(currentStr); //adds given variable if not already in list (avoids double-counting)
-                }
-            }
-        }
-
-        int numUniqueVariables = inputVars.size();
-
-        int columns = numUniqueVariables + 1;
-        int rows = (int) Math.pow(2, numUniqueVariables) + 1;
-
-        if (strInput.contains("/\\")) {
-
-        }
-
-        if (strInput.contains("/\\")) {
-
-        }
-
-        if (strInput.contains("/\\")) {
-
-        }
-
-        if (strInput.contains("/\\")) {
-
-        }
-
-
-        GridLayout truthGrid = new GridLayout(rows, columns);
-
-        System.out.println("Grid dimensions: " + truthGrid.getRows() + "rows, " + truthGrid.getColumns() + "columns");
-
-        for (int i = 0; i < inputVars.size(); i++) {
-            JLabel label = new JLabel();
-            label.setText(inputVars.get(i));
-            //System.out.println(inputVars.get(i));
-            label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            mainPanel.add(label);
-        }
-
-
-        //Evaluate eval = new Evaluate();
-
-        //System.out.println(eval.and(true, false));
-
-        mainPanel.setLayout(truthGrid);
         this.setVisible(true);
     }
 }
