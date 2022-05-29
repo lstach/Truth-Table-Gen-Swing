@@ -12,7 +12,7 @@ import java.util.Stack;
 public class ShuntingYard {
 
     ArrayList<String> operators = new ArrayList<String>(Arrays.asList(
-            "->", "/\\", "\\/", "<->", "!"
+            "->", "/\\", "\\/", "<->", "!", "xor"
     ));
 
     //operands exclude 't' and 'f' because those are considered reserved keywords for "true" and "false" respectively.  Same for "x", which is reserve for xor
@@ -66,18 +66,20 @@ public class ShuntingYard {
 
 
     //need to implement: !, xor
+    //higher number -> higher precedent
     int precedenceLevel(String operator){
         switch(operator){
             case"<->":
                 return 0;
             case "->":
                 return 1;
+            case "xor":
             case "\\/":
                 return 2;
             case "/\\":
                 return 3;
-            /*case "!":
-                return 4;*/
+            case "!":
+                return 4;
         }
         return -1;
     }
@@ -85,11 +87,16 @@ public class ShuntingYard {
     public boolean calculate(ArrayList<String> tokens){
         Stack<Boolean> stack = new Stack<>();
 
-
         for (String token: tokens){
 
             if (isBoolean(token)){
                 stack.push(Boolean.parseBoolean(token));
+            }
+            //'!' gets its own block because we don't want to pop 2 booleans from the stack if there's only 1
+            else if (token.equals("!")){
+                boolean p = stack.pop();
+                boolean value = Evaluate.not(p);
+                stack.push(value);
             }
             else{
                 boolean q = stack.pop();
