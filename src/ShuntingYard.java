@@ -126,55 +126,6 @@ public class ShuntingYard {
         return stack.pop();
     }
 
-    //takes in an arrayList of tokens in RPN notation
-    public ArrayList<ArrayList<String>> generateRows(ArrayList<String> tokens){
-
-        int n = countOperands(tokens);
-
-        ArrayList<ArrayList<String>> listOfCombinations = new ArrayList<>(); //each combination in this list is a combination of true/false for the propositional logic formula.
-        //listOfCombinations contains all possible combinations of true/false.
-
-        ArrayList<String> binaryStrings = new ArrayList<>();
-
-        //each iteration of the for loop builds 1 row of the truth table
-        for (int i = 0; i < Math.pow(2, n); i++){
-            String bin = Integer.toBinaryString(i);
-            while (bin.length() < n){
-                bin  = "0" + bin;
-            }
-            binaryStrings.add(bin);
-        }
-
-        //AAAAAAAAAAAAAAAA
-        for (String binaryString : binaryStrings) {
-            for (int i = 0; i < binaryString.length(); i++){
-
-                String trueOrFalse = "";
-                ArrayList<String> row = new ArrayList<>();
-
-                if (binaryString.substring(i, i+1).equals("0")){
-                    trueOrFalse = "false";
-                }
-                else if (binaryString.substring(i, i+1).equals("1")){
-                    trueOrFalse = "true";
-                }
-
-                for (int j = 0; j < tokens.size(); j++){
-                    String tokenToAdd = "";
-                    if (isOperand(tokens.get(j))){
-                        tokenToAdd = trueOrFalse;
-                    }
-                    else{
-                        tokenToAdd = tokens.get(j);
-                    }
-                }
-
-            }
-        }
-
-        return listOfCombinations;
-    }
-
     public int countOperands(ArrayList<String> tokens){
         ArrayList<String> uniqueOps = new ArrayList<>();
         for (int i = 0; i < tokens.size(); i++){
@@ -185,6 +136,32 @@ public class ShuntingYard {
         }
         return uniqueOps.size();
     }
+
+    //takes in an arrayList of tokens in RPN notation
+    public boolean[][] generateRows(int numOperands){
+
+        boolean[][] grid = new boolean[(int)Math.pow(2, numOperands)][numOperands];
+
+        //each iteration of the for loop builds 1 row of the `truth table
+        for (int i = 0; i < Math.pow(2, numOperands); i++){
+            String bin = Integer.toBinaryString(i);
+            while (bin.length() < numOperands){
+                bin  = "0" + bin;
+            }
+            for (int j = 0; j < bin.length(); j++){
+                if (bin.charAt(j) == 0){
+                    grid[i][j] = false;
+                }
+                else if (bin.charAt(j) == 1){
+                    grid[i][j] = true;
+                }
+            }
+        }
+
+        return grid;
+    }
+
+
 
     public boolean isLeftParen(String s){
         return (s.equals("("));
