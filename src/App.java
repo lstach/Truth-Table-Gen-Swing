@@ -27,19 +27,57 @@ public class App {
             splits the String and then converts the resulting array to an arraylist.
             */
             ArrayList<String> infixTokens = new ArrayList<>(Arrays.asList(input.split(" ")));
-            ArrayList<String> rpnTokens = shunter.shunt(split);
 
+            int numOperands = shunter.countOperands(infixTokens);
+            boolean[][] combinations = shunter.generateRows(numOperands);
 
-            int num = shunter.countOperands(infixTokens);
-            boolean[][] matrix = shunter.generateRows(num);
-
-            System.out.println("Number of operands: " + num);
-            for (int row = 0; row < matrix.length; row++){
-                for (int col = 0; col < matrix[row].length; col++){
-                    System.out.print(matrix[row][col] + " ");
+            for (int row = 0; row < combinations.length; row++){
+                for (int col = 0; col < combinations[row].length; col++){
+                    System.out.print(combinations[row][col] + " ");
                 }
                 System.out.println();
             }
+
+            ArrayList<String> rpnTokens = shunter.shunt(split);
+
+            String[] operandArray = new String[numOperands];
+
+            ArrayList<String>[] truthTable = new ArrayList[combinations.length];
+
+            for (int row = 0; row < combinations.length; row++){
+                int col = 0;
+                //visitedOperands can be made more efficient with a hashmap (index represents index in row, key represents operand)
+                ArrayList<String> visitedOperands = new ArrayList<>();
+                ArrayList<String> formula = new ArrayList<>();
+                for (int i = 0; i < rpnTokens.size(); i++){
+                    String token = rpnTokens.get(i);
+                    if (shunter.isOperand(token)){
+                        if (!visitedOperands.contains(token)){
+                            formula.add(Boolean.toString(combinations[row][col]));
+                            visitedOperands.add(token);
+                            col++;
+                        }
+                        else{
+                            int retrieve = visitedOperands.indexOf(token);
+                            formula.add(Boolean.toString(combinations[row][retrieve]));
+                        }
+                    }
+                    else{
+                        formula.add(token);
+                    }
+                }
+                truthTable[row] = formula;
+            }
+
+            System.out.println();
+
+            for (int row = 0; row < truthTable.length; row++){
+                for (int i = 0; i < truthTable[row].size(); i++){
+                    System.out.print(truthTable[row].get(i) + " ");
+                }
+                System.out.println();
+            }
+
 
             /*
             for (int i = 0; i < rpnTokens.size(); i++){

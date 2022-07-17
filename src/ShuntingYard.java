@@ -59,6 +59,9 @@ public class ShuntingYard {
             else if (isBoolean(token)){ //if token is an operand (i.e. a boolean variable) add it to the output
                 output.add(token);
             }
+            else if (isOperand(token)){
+                output.add(token);
+            }
         }
 
         while(!operatorStack.isEmpty()){
