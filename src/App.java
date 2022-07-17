@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class App {
@@ -20,22 +21,34 @@ public class App {
 
             input = scanner.nextLine();
 
-            String[] infixTokens = input.split(" ");
+            String[] split = input.split(" ");
+
+            /*String.split() method returns a String array, but it's easier to work with ArrayLists. This line
+            splits the String and then converts the resulting array to an arraylist.
+            */
+            ArrayList<String> infixTokens = new ArrayList<>(Arrays.asList(input.split(" ")));
+            ArrayList<String> rpnTokens = shunter.shunt(split);
 
 
+            int num = shunter.countOperands(infixTokens);
+            boolean[][] matrix = shunter.generateRows(num);
 
-            ArrayList<String> rpnTokens = shunter.shunt(infixTokens);
-
-            for (int i = 0; i < rpnTokens.size(); i++){
-                System.out.println(rpnTokens.get(i));
+            System.out.println("Number of operands: " + num);
+            for (int row = 0; row < matrix.length; row++){
+                for (int col = 0; col < matrix[row].length; col++){
+                    System.out.print(matrix[row][col] + " ");
+                }
+                System.out.println();
             }
 
+            /*
+            for (int i = 0; i < rpnTokens.size(); i++){
+                System.out.print(rpnTokens.get(i) + " ");
+            }
 
             boolean answer = shunter.calculate(rpnTokens);
 
-            System.out.println("Evaluates to: " + answer);
-
-
+            System.out.println("Evaluates to: " + answer);*/
         }
 
         //new MyFrame();

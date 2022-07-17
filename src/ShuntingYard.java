@@ -3,9 +3,12 @@ import java.util.Arrays;
 import java.util.Stack;
 
 /*TODO:
-    count all operands
-    create every possible combination of true/false for all operands (this represents 1 row in the truth table)
-    evaluate each combination
+    1. count all operands
+    2. create every possible combination of true/false for all operands (this represents 1 row in the truth table)
+    3. generate each formula (as a string) with explicit true/false values according to the matrix of true/false combinations
+    4. convert each formula into RPN
+    5. evaluate each combination
+    6. display output in truth table accordingly
  */
 
 
@@ -149,15 +152,11 @@ public class ShuntingYard {
                 bin  = "0" + bin;
             }
             for (int j = 0; j < bin.length(); j++){
-                if (bin.charAt(j) == 0){
-                    grid[i][j] = false;
-                }
-                else if (bin.charAt(j) == 1){
+                if (bin.charAt(j) == '1'){
                     grid[i][j] = true;
                 }
             }
         }
-
         return grid;
     }
 
