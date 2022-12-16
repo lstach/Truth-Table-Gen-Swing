@@ -163,8 +163,6 @@ public class ShuntingYard {
         return grid;
     }
 
-
-
     public boolean isLeftParen(String s){
         return (s.equals("("));
     }

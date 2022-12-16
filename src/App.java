@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class App {
 
-
     //TODO: true or false does not work (evaluates to false)
 
     public static void main(String[] args) {
