@@ -37,7 +37,7 @@ public class App {
                 System.out.println();
             }
 
-            ArrayList<String> rpnTokens = shunter.shunt(split);
+            ArrayList<String> rpnTokens = shunter.shunt(infixTokens);
 
             String[] operandArray = new String[numOperands];
 

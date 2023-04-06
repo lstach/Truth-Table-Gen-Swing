@@ -28,12 +28,12 @@ public class ShuntingYard {
 
     }
 
-    public ArrayList<String> shunt(String[] tokens){
+    public ArrayList<String> shunt(ArrayList<String> tokens){
         Stack<String> operatorStack = new Stack<>();
         ArrayList<String> output = new ArrayList<>();
 
-        for (int i = 0; i < tokens.length; i++){ //while there are tokens to be read
-            String token = tokens[i]; //read a token
+        for (int i = 0; i < tokens.size(); i++){ //while there are tokens to be read
+            String token = tokens.get(i); //read a token
             if (isOperator(token)){ //if token is an operator
                 while (!operatorStack.isEmpty() && precedenceLevel(token) <= precedenceLevel(operatorStack.peek())){ //while there is an operator at the top of the stack w/ greater precedence
                     if (precedenceLevel(token) > precedenceLevel(operatorStack.peek())){ //push the current token to the stack if it is of higher precedence
